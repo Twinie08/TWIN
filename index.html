@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scadlar</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===================== LOGIN / SIGN UP ===================== -->
+  <section id="authView" class="auth-view">
+    <div class="auth-card">
+      <div class="logo-row">
+        <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
+          <path d="M32 8 L63 23 L32 38 L1 23 Z" fill="currentColor"/>
+          <path d="M14 33 V45 C14 50 22 54 32 54 C42 54 50 50 50 45 V33 L32 42 Z" fill="currentColor"/>
+          <path d="M57 26 V44" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <span class="logo-text">Scadlar</span>
+      </div>
+      <p class="tagline">Schedule, class, homework, online activity reminder</p>
+
+      <div class="tabs">
+        <button type="button" id="tabLogin" class="tab active">Log In</button>
+        <button type="button" id="tabSignup" class="tab">Sign Up</button>
+      </div>
+
+      <form id="authForm" autocomplete="on">
+        <input type="text" id="nameInput" placeholder="Full name" class="hidden">
+        <input type="email" id="emailInput" placeholder="Email" required>
+        <input type="password" id="passInput" placeholder="Password" required minlength="4">
+        <p id="authError" class="error"></p>
+        <button type="submit" id="authSubmit" class="btn-black">Log In</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===================== MAIN APP ===================== -->
+  <section id="appView" class="app hidden">
+    <header class="topbar">
+      <div class="brand">
+        <svg class="logo small" viewBox="0 0 64 64" aria-hidden="true">
+          <path d="M32 8 L63 23 L32 38 L1 23 Z" fill="currentColor"/>
+          <path d="M14 33 V45 C14 50 22 54 32 54 C42 54 50 50 50 45 V33 L32 42 Z" fill="currentColor"/>
+          <path d="M57 26 V44" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <span>Scadlar</span>
+      </div>
+      <div class="top-right">
+        <span id="greeting" class="greeting"></span>
+        <button id="bellBtn" class="icon-btn" title="Turn on notifications">🔔</button>
+        <div id="avatar" class="avatar">S</div>
+        <button id="logoutBtn" class="btn-pink small">Log out</button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <nav class="sidebar" id="sidebar">
+        <button class="side-btn active" data-filter="all">🏠 <span>Home</span></button>
+        <button class="side-btn" data-filter="schedule">📅 <span>Schedule</span></button>
+        <button class="side-btn" data-filter="class">📖 <span>Class</span></button>
+        <button class="side-btn" data-filter="homework">✏️ <span>Homework</span></button>
+        <button class="side-btn" data-filter="online">💻 <span>Online Activity</span></button>
+      </nav>
+
+      <main class="content">
+
+        <!-- Add Item -->
+        <section class="card">
+          <h2><span class="plus">+</span> Add Item</h2>
+
+          <form id="itemForm">
+            <div class="form-row">
+              <label for="type">Category</label>
+              <select id="type">
+                <option value="schedule">Schedule</option>
+                <option value="class">Class</option>
+                <option value="homework">Homework</option>
+                <option value="online">Online Activity</option>
+              </select>
+            </div>
+
+            <!-- Schedule: Monday – Saturday -->
+            <div class="fields" data-for="schedule">
+              <div class="form-row">
+                <label>Schedule</label>
+                <div class="inputs">
+                  <select name="day" required>
+                    <option value="">Monday – Saturday</option>
+                    <option>Monday</option>
+                    <option>Tuesday</option>
+                    <option>Wednesday</option>
+                    <option>Thursday</option>
+                    <option>Friday</option>
+                    <option>Saturday</option>
+                  </select>
+                  <input type="time" name="time" required title="Time">
+                </div>
+              </div>
+            </div>
+
+            <!-- Class: Subject, Time, Room -->
+            <div class="fields hidden" data-for="class">
+              <div class="form-row">
+                <label>Class</label>
+                <div class="inputs three">
+                  <input type="text" name="subject" placeholder="Subject" required>
+                  <input type="time" name="time" required title="Time">
+                  <input type="text" name="room" placeholder="Room" required>
+                </div>
+              </div>
+              <div class="form-row">
+                <label>Day</label>
+                <div class="inputs">
+                  <select name="day" required>
+                    <option value="">Monday – Saturday</option>
+                    <option>Monday</option>
+                    <option>Tuesday</option>
+                    <option>Wednesday</option>
+                    <option>Thursday</option>
+                    <option>Friday</option>
+                    <option>Saturday</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Homework: Subject, Title -->
+            <div class="fields hidden" data-for="homework">
+              <div class="form-row">
+                <label>Homework</label>
+                <div class="inputs">
+                  <input type="text" name="subject" placeholder="Subject" required>
+                  <input type="text" name="title" placeholder="Title" required>
+                </div>
+              </div>
+              <div class="form-row">
+                <label>Reminder date</label>
+                <div class="inputs">
+                  <input type="datetime-local" name="due" title="Date and time for reminder">
+                </div>
+              </div>
+            </div>
+
+            <!-- Online Activity: Subject, Title -->
+            <div class="fields hidden" data-for="online">
+              <div class="form-row">
+                <label>Online Activity</label>
+                <div class="inputs">
+                  <input type="text" name="subject" placeholder="Subject" required>
+                  <input type="text" name="title" placeholder="Title" required>
+                </div>
+              </div>
+              <div class="form-row">
+                <label>Reminder date</label>
+                <div class="inputs">
+                  <input type="datetime-local" name="due" title="Date and time for reminder">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <label for="remind">Remind me</label>
+              <select id="remind">
+                <option value="0">At the time</option>
+                <option value="10">10 minutes before</option>
+                <option value="30">30 minutes before</option>
+                <option value="60" selected>1 hour before</option>
+                <option value="1440">1 day before</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn-black center">Add +</button>
+          </form>
+        </section>
+
+        <!-- My List -->
+        <section class="card">
+          <h2>☰ My List</h2>
+          <div class="chips" id="chips">
+            <button class="chip active" data-filter="all">All</button>
+            <button class="chip" data-filter="schedule">Schedule</button>
+            <button class="chip" data-filter="class">Class</button>
+            <button class="chip" data-filter="homework">Homework</button>
+            <button class="chip" data-filter="online">Online Activity</button>
+          </div>
+          <div id="list" class="list"></div>
+        </section>
+
+      </main>
+    </div>
+  </section>
+
+  <div id="toasts" class="toasts"></div>
+  <script src="script.js"></script>
+</body>
+</html>
